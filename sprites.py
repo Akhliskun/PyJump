@@ -6,13 +6,13 @@ from random import choice, randrange
 vec = pg.math.Vector2
 
 
-class Spritesheet:
-    # Utility class for loading and parsing spritesheets
+class Spritesheet():
+    """Utility class for loading and parsing spritesheets"""
     def __init__(self, filename):
         self.spritesheet = pg.image.load(filename).convert()
 
     def get_image(self, x, y, width, height):
-        # Grab an image out of a spritesheet
+        """Grab an image out of a spritesheet"""
         image = pg.Surface((width, height))
         image.blit(self.spritesheet, (0, 0), (x, y, width, height))
         image = pg.transform.scale(image, (int(width / 2), int(height / 2)))
@@ -33,9 +33,9 @@ class Player(pg.sprite.Sprite):
         self.image = self.standing_frames[0]
         self.rect = self.image.get_rect()
         self.rect.center = (40, HEIGHT - 100)
-        self.pos = vec(40, HEIGHT - 100)
-        self.vel = vec(0, 0)
-        self.acc = vec(0, 0)
+        self.pos = vec(x=40, y=HEIGHT - 100)
+        self.vel = vec(x=0, y=0)
+        self.acc = vec(x=0, y=0)
 
     def load_images(self):
         self.standing_frames = [self.game.spritesheet.get_image(614, 1063, 120, 191),

@@ -11,18 +11,17 @@ from keybinds import *
 
 class Game():
     def __init__(self):
-        # initialize game window, etc
         pg.init()
         pg.mixer.init()
         self.screen = pg.display.set_mode((WIDTH, HEIGHT))
         self.clock = pg.time.Clock()
-        pg.display.set_caption(TITLE + " | FPS: " + str(int(self.clock.get_fps())))
+        pg.display.set_caption('{} | FPS: {}'.format(TITLE, str(int(self.clock.get_fps()))))
         self.running = True
         self.font_name = pg.font.match_font(FONT_NAME)
         self.load_data()
 
     def load_data(self):
-        # Load HighScore
+        """Load Highscore screen"""
         self.dir = path.dirname(__file__)
         img_dir = path.join(self.dir, 'img')
 
@@ -32,7 +31,7 @@ class Game():
                 self.highscore = int(f.read())
 
             # Self populate the HS to be 0
-            except:
+            except: #TODO Exception to broad, try to catch only one type of error
                 self.highscore = 0
 
             self.spritesheet = Spritesheet(path.join(img_dir, SPRITESHEET))
@@ -50,7 +49,7 @@ class Game():
                 path.join(self.sound_dir, 'powerup_sound.wav'))  # TODO: Move this to a SoundDB system
 
     def new(self):
-        # Restarts game / Start a new game
+        """Restarts game / Start a new game"""
         self.score = 0
         self.all_sprites = pg.sprite.LayeredUpdates()
         self.platforms = pg.sprite.Group()
@@ -68,7 +67,7 @@ class Game():
             c.rect.y += 500
 
     def run(self):
-        # game loop
+        """game loop"""
         pg.mixer.music.play(loops=-1)  # Infinite looping.
         self.playing = True
         while self.playing:
@@ -79,7 +78,7 @@ class Game():
         pg.mixer.music.fadeout(500)
 
     def update(self):
-        # game loop - update
+        """game loop - update"""
         self.all_sprites.update()
 
         # Spawn a mob
@@ -152,7 +151,7 @@ class Game():
                      random.randrange(-75, -30))  # Generate Y spawn cords.
 
     def events(self):
-        # Game Loop - events
+        """Game Loop - events"""
         for event in pg.event.get():
             # check for closing the window
             if event.type == pg.QUIT:
@@ -168,16 +167,14 @@ class Game():
                     self.player.jump_cut()
 
     def draw(self):
-        # Game Loop - draw
+        """Game Loop - draw"""
         self.screen.fill(BGCOLOR)
         self.all_sprites.draw(self.screen)
-
         self.draw_text(str(self.score), 22, WHITE, WIDTH / 2, 15)
-
         pg.display.flip()
 
     def show_start_screen(self):
-        # Game splash screen
+        """Game splash screen"""
         pg.mixer.music.load(path.join(self.sound_dir, 'mainmenu.ogg'))  # TODO: Move this to a SoundDB system
         pg.mixer.music.play(loops=-1)
         self.screen.fill(BGCOLOR)
@@ -190,7 +187,7 @@ class Game():
         pg.mixer.music.fadeout(500)
 
     def show_gameover_screen(self):
-        # Skip GameOver screen if "X" is pressed while playing
+        """Skip GameOver screen if "X" is pressed while playing"""
         if not self.running:
             return
 
