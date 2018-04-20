@@ -74,7 +74,7 @@ class Player(pg.sprite.Sprite):
 
     def update(self):
         self.animate()
-        self.acc = vec(0, PLAYER_GRAVITY)
+        self.acc = vec(x=0, y=PLAYER_GRAVITY)
         keys = pg.key.get_pressed()
         if keys[pg.K_LEFT]:
             self.acc.x = -PLAYER_ACC
@@ -148,11 +148,13 @@ class Cloud(pg.sprite.Sprite):
         self.image = pg.transform.scale(self.image, (int(self.rect.width * scale),
                                                      int(self.rect.height * scale)))
         self.rect.x = randrange(WIDTH - self.rect.width)
-        self.rect.y = randrange(-500, -50)
+        self.rect.y = randrange(-300, -50)
+
 
     def update(self):
         if self.rect.top > HEIGHT * 2:
             self.kill()
+        # pg.sprite.spritecollide(self.platform, self.platform, True)
 
 
 class Platform(pg.sprite.Sprite):
