@@ -9,10 +9,9 @@ from sprites import *
 from keybinds import *
 
 
-class Game:
+class Game():
     def __init__(self):
         # initialize game window, etc
-
         pg.init()
         pg.mixer.init()
         self.screen = pg.display.set_mode((WIDTH, HEIGHT))
@@ -234,11 +233,11 @@ class Game:
         self.screen.blit(text_surface, text_rect)
 
 
-g = Game()
-g.show_start_screen()
-while g.running:
-    g.new()  # Generates a new game
-    g.run()  # Runs the game
-    g.show_gameover_screen()
-
-pg.quit()
+if __name__ == '__main__':
+    g = Game()
+    g.show_start_screen()
+    while g.running:
+        g.new()  # Generates a new game
+        g.run()  # Runs the game
+        g.show_gameover_screen()
+    pg.quit()
